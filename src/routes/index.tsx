@@ -11,24 +11,22 @@ function LandingPage() {
   return (
     <div className="min-h-screen w-full bg-white font-sans overflow-x-hidden">
       {/* Navigation Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border/50">
-        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-              <Logo size={24} />
-            </div>
-            <span className="font-extrabold text-xl tracking-tight text-ink">RENTED</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link to="/signin" className="hidden sm:block text-sm font-bold text-ink hover:text-primary transition-colors">
-              Log in
-            </Link>
-            <Link to="/signup" className="bg-ink text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:bg-ink/90 transition-all hover:scale-105 active:scale-95">
-              Start Renting
-            </Link>
-          </div>
-        </div>
-      </header>
+<header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border/50">
+  <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    {/* Logo only - bigger and no text */}
+    <div className="flex items-center">
+      <Logo size={36} className="hover:scale-105 transition-transform duration-200" />
+    </div>
+    <div className="flex items-center gap-4">
+      <Link to="/signin" className="hidden sm:block text-sm font-bold text-ink hover:text-primary transition-colors">
+        Log in
+      </Link>
+      <Link to="/signup" className="bg-ink text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:bg-ink/90 transition-all hover:scale-105 active:scale-95">
+        Start Renting
+      </Link>
+    </div>
+  </div>
+</header>
 
       <main className="pt-20">
         {/* Hero Section */}

@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, ShieldCheck, Truck, MapPin } from "lucide-react";
-import { useMemo } from "react";
-import { differenceInCalendarDays, format } from "date-fns";
+import { useMemo, useEffect } from "react";
+import { differenceInCalendarDays, format, addDays } from "date-fns";
 import { getListing } from "@/lib/mock-data";
 import { useApp } from "@/lib/store";
 
@@ -17,13 +17,37 @@ function Rent() {
   const draft = useApp((s) => s.draft);
   const updateDraft = useApp((s) => s.updateDraft);
 
-  const today = format(new Date(), "yyyy-MM-dd");
-  const start = draft.startDate ?? today;
-  const end = draft.endDate ?? format(new Date(Date.now() + 2 * 86400000), "yyyy-MM-dd");
+  // Initialize draft with default dates on first render
+  useEffect(() => {
+    if (!draft.startDate || !draft.endDate) {
+      const tomorrow = format(addDays(new Date(), 1), "yyyy-MM-dd");
+      const threeDaysAfterTomorrow = format(addDays(new Date(), 4), "yyyy-MM-dd");
+      updateDraft({
+        startDate: draft.startDate || tomorrow,
+        endDate: draft.endDate || threeDaysAfterTomorrow,
+      });
+    }
+  }, []);
+
+  // Use store values with fallback defaults
+  const start = draft.startDate || format(addDays(new Date(), 1), "yyyy-MM-dd");
+  const end = draft.endDate || format(addDays(new Date(), 4), "yyyy-MM-dd");
 
   const days = useMemo(() => {
-    const d = differenceInCalendarDays(new Date(end), new Date(start));
-    return Math.max(1, d);
+    try {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+
+      // Validate dates are valid Date objects
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        return 1;
+      }
+
+      const d = differenceInCalendarDays(endDate, startDate);
+      return Math.max(1, d);
+    } catch {
+      return 1;
+    }
   }, [start, end]);
 
   const base = listing.pricePerDay * days;
