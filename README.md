@@ -19,12 +19,6 @@ Rented is designed for the everyday Tunisian who wants to access tools without b
 1. Install dependencies: `npm install`
 2. Start dev server: `npm run dev`
 
-## Repository remotes
-
-- Original: https://github.com/Ahmed-Braiek/rentend.git
-- Pushed to: https://github.com/Adam-BArbia/rented
-
-
 ## Technical overview
 
 ### App
